@@ -26,16 +26,16 @@ if (!DRIVER_NAME) {
   process.exit(1);
 }
 
-gulp.task('watch', function () {
+gulp.task('watch', async function () {
   gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css'], gulp.parallel('build'));
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', async function () {
   return gulp.src([`${DIST}*.js`, `${DIST}*.css`, `${DIST}*.hbs`, `${TMP}*.js`, `${TMP}*.css`, `${TMP}*.hbs`,], { read: false })
     .pipe(clean());
 });
 
-gulp.task('styles', gulp.series('clean', function () {
+gulp.task('styles', gulp.series('clean', async function () {
   return gulp.src([
     BASE + '**.css'
   ])
@@ -44,12 +44,12 @@ gulp.task('styles', gulp.series('clean', function () {
     .pipe(gulp.dest(DIST));
 }))
 
-gulp.task('assets', gulp.series('styles', function () {
+gulp.task('assets', gulp.series('styles', async function () {
   return gulp.src(ASSETS + '*')
     .pipe(gulp.dest(DIST));
 }));
 
-gulp.task('babel', gulp.series('assets', function () {
+gulp.task('babel', gulp.series('assets', async function () {
   const babelOpts = {
     presets: [
       [
@@ -87,7 +87,7 @@ gulp.task('babel', gulp.series('assets', function () {
     .pipe(gulp.dest(TMP));
 }));
 
-gulp.task('rexport', gulp.series('babel', function () {
+gulp.task('rexport', gulp.series('babel', async function () {
   const babelOpts = {
     presets: [
       [
@@ -117,7 +117,7 @@ gulp.task('rexport', gulp.series('babel', function () {
     .pipe(gulp.dest(TMP));
 }));
 
-gulp.task('compile', gulp.series('rexport', function () {
+gulp.task('compile', gulp.series('rexport', async function () {
   return gulp.src([
     `${TMP}**.js`
   ])
@@ -127,7 +127,7 @@ gulp.task('compile', gulp.series('rexport', function () {
 
 gulp.task('build', gulp.series('compile'));
 
-gulp.task('server', gulp.parallel(['build', 'watch'], function () {
+gulp.task('server', gulp.parallel(['build', 'watch'], async function () {
   return gulpConnect.server({
     root: [DIST],
     port: process.env.PORT || 3000,
@@ -137,6 +137,6 @@ gulp.task('server', gulp.parallel(['build', 'watch'], function () {
 
 gulp.task('default', gulp.series('build'));
 
-gulp.task('watch', function () {
+gulp.task('watch', async function () {
   gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css'], gulp.parallel('build'));
 });
