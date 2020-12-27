@@ -9,31 +9,28 @@ const LAYOUT;
 
 /*!!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
 // EMBER API Access - if you need access to any of the Ember API's add them here in the same manner rather then import them via modules, since the dependencies exist in rancher we dont want to expor the modules in the amd def
-const computed     = Ember.computed;
-const get          = Ember.get;
-const set          = Ember.set;
-const alias        = Ember.computed.alias;
-const service      = Ember.inject.service;
+const computed = Ember.computed;
+const get = Ember.get;
+const set = Ember.set;
+const alias = Ember.computed.alias;
+const service = Ember.inject.service;
 
-const defaultRadix = 10;
-const defaultBase  = 1024;
 /*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
-
 
 
 /*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
   driverName: '%%DRIVERNAME%%',
-  config:     alias('model.%%DRIVERNAME%%Config'),
-  app:        service(),
+  config: alias('model.%%DRIVERNAME%%Config'),
+  app: service(),
 
   init() {
     // This does on the fly template compiling, if you mess with this :cry:
     const decodedLayout = window.atob(LAYOUT);
-    const template      = Ember.HTMLBars.compile(decodedLayout, {
+    const template = Ember.HTMLBars.compile(decodedLayout, {
       moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template'
     });
-    set(this,'layout', template);
+    set(this, 'layout', template);
 
     this._super(...arguments);
 
@@ -41,12 +38,13 @@ export default Ember.Component.extend(NodeDriver, {
   /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
   // Write your component here, starting with setting 'model' to a machine with your config populated
-  bootstrap: function() {
+  bootstrap: function () {
     // bootstrap is called by rancher ui on 'init', you're better off doing your setup here rather then the init function to ensure everything is setup correctly
     let config = get(this, 'globalStore').createRecord({
       type: '%%DRIVERNAME%%Config',
-      cpuCount: 2,
-      memorySize: 2048,
+      location: 'zrh',
+      password: '',
+      username: '',
     });
 
     set(this, 'model.%%DRIVERNAME%%Config', config);
@@ -56,21 +54,22 @@ export default Ember.Component.extend(NodeDriver, {
   validate() {
     // Get generic API validation errors
     this._super();
-    var errors = get(this, 'errors')||[];
-    if ( !get(this, 'model.name') ) {
+    var errors = get(this, 'errors') || [];
+    if (!get(this, 'model.name')) {
       errors.push('Name is required');
     }
 
-    // Add more specific errors
+    if (!get(this, 'model.%%DRIVERNAME%%Config.username')) {
+      errors.push('Username is required');
+    }
 
-    // Check something and add an error entry if it fails:
-    if ( parseInt(get(this, 'config.memorySize'), defaultRadix) < defaultBase ) {
-      errors.push('Memory Size must be at least 1024 MB');
+    if (!get(this, 'model.%%DRIVERNAME%%Config.password')) {
+      errors.push('Password is required');
     }
 
     // Set the array of errors for display,
     // and return true if saving should continue.
-    if ( get(errors, 'length') ) {
+    if (get(errors, 'length')) {
       set(this, 'errors', errors);
       return false;
     } else {
