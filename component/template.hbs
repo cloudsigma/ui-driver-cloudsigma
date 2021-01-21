@@ -5,7 +5,7 @@
 
     <!-- account access -->
     {{#accordion-list-item title="Account Access"
-                           detail="API endpoint and credentials will be used to launch CloudSigma servers."
+                           detail="API endpoint and credentials will be used to launch CloudSigma servers"
                            expandAll=expandAll
                            expand=(action expandFn)
                            expandOnInit=true
@@ -29,14 +29,113 @@
         </div>
       </div>
       <div class="row">
-        <div class="col col-inline span-2">
-          <label class="acc-label">Location</label>
-        </div>
-        <div class="col span-10">
-          {{new-select class="form-control"
-                       content=locationOptions
-                       value=config.location
+        <div class="col span-12">
+          <label class="acc-label">API Location</label>
+          {{input type="text"
+                  class="form-control"
+                  value=config.apiLocation
+                  placeholder="CloudSigma API location endpoint code"
           }}
+        </div>
+      </div>
+    {{/accordion-list-item}}
+
+    <!-- server -->
+    {{#accordion-list-item title="Server"
+                           detail="Customize the CloudSigma server that will be created"
+                           expandAll=expandAll
+                           expand=(action expandFn)
+                           expandOnInit=true
+    }}
+      <div class="row">
+        <div class="col span-6">
+          <label class="acc-label">CPU</label>
+          <div class="input-group">
+            {{input-integer min=250
+                            value=config.cpu
+                            classNames="form-control"
+            }}
+            <div class="input-group-addon bg-default">MHz</div>
+          </div>
+          <p class="help-block">
+            CPU clock speed for the host in MHz.
+          </p>
+        </div>
+        <div class="col span-6">
+          <label class="acc-label">Memory</label>
+          <div class="input-group">
+            {{input-integer min=256
+                            value=config.memory
+                            classNames="form-control"
+            }}
+            <div class="input-group-addon bg-default">MB</div>
+          </div>
+          <p class="help-block">
+            Size of memory for the host in MB.
+          </p>
+        </div>
+      </div>
+      <!-- drive options -->
+      <div>
+        <div class="over-hr">
+          <span>Drive Options</span>
+        </div>
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">Drive Name</label>
+            {{input type="text"
+                    value=config.driveName
+                    classNames="form-control"
+                    placeholder="Drive name"
+            }}
+            <p class="help-block">
+              Library drive name to clone (latest version will be used).
+            </p>
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">Drive Size</label>
+            <div class="input-group">
+              {{input-integer value=config.driveSize
+                              classNames="form-control"
+              }}
+              <div class="input-group-addon bg-default">GB</div>
+            </div>
+            <p class="help-block">
+              Drive size for the host in GB.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">Drive UUID</label>
+            {{input type="text"
+                    value=config.driveUuid
+                    classNames="form-control"
+                    placeholder="Drive UUID"
+            }}
+            <p class="help-block">
+              Library drive UUID to clone.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- network options -->
+      <div>
+        <div class="over-hr">
+          <span>Network Options</span>
+        </div>
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">Static IP</label>
+            {{input type="text"
+                    class="form-control"
+                    value=config.staticIp
+                    placeholder="Network adapter's static IP address"
+            }}
+            <p class="help-block">
+              Network adapter's static IP address.
+            </p>
+          </div>
         </div>
       </div>
     {{/accordion-list-item}}
