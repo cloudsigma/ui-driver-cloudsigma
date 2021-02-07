@@ -12,16 +12,17 @@
     "url": "https://github.com/cloudsigma/ui-driver-cloudsigma"
   },
   "scripts": {
-    "start": "gulp server",
+    "build": "gulp build",
     "clean": "gulp clean",
-    "build": "gulp build"
+    "format:check": "prettier --check component/*.{css,js}",
+    "start": "gulp server"
   },
   "homepage": "https://github.com/cloudsigma/ui-driver-cloudsigma#readme",
   "devDependencies": {
     "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.11",
     "babel-plugin-add-module-exports": "1.0.4",
     "babel-plugin-transform-es2015-modules-amd": "6.24.1",
-    "@babel/preset-env": "7.12.11",
     "del": "6.0.0",
     "gulp": "4.0.2",
     "gulp-babel": "8.0.0",
@@ -32,6 +33,7 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "3.0.0",
     "jshint": "2.12.0",
+    "prettier": "2.2.1",
     "replace-string": "3.1.0",
     "yargs": "16.2.0"
   }

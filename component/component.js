@@ -6,7 +6,6 @@ import NodeDriver from 'shared/mixins/node-driver';
 const LAYOUT;
 /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
-
 /*!!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
 // EMBER API Access - if you need access to any of the Ember API's add them here in the same manner rather then import them via modules, since the dependencies exist in rancher we dont want to expor the modules in the amd def
 const computed = Ember.computed;
@@ -16,7 +15,6 @@ const alias = Ember.computed.alias;
 const service = Ember.inject.service;
 
 /*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
-
 
 /*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
@@ -28,12 +26,11 @@ export default Ember.Component.extend(NodeDriver, {
     // This does on the fly template compiling, if you mess with this :cry:
     const decodedLayout = window.atob(LAYOUT);
     const template = Ember.HTMLBars.compile(decodedLayout, {
-      moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template'
+      moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template',
     });
     set(this, 'layout', template);
 
     this._super(...arguments);
-
   },
   /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
@@ -81,7 +78,7 @@ export default Ember.Component.extend(NodeDriver, {
       set(this, 'errors', null);
       return true;
     }
-  }
+  },
 
   // Any computed properties or custom logic can go here
 });

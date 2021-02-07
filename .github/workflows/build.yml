@@ -25,5 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check code formatting
+        run: npm run format:check
+
       - name: Build driver
         run: npm run build
