@@ -1,6 +1,6 @@
 /* jshint node: true */
+const del = require('del');
 const gulp = require('gulp');
-const clean = require('gulp-clean');
 const gulpConcat = require('gulp-concat');
 const gulpConnect = require('gulp-connect');
 const replace = require('gulp-replace');
@@ -32,25 +32,13 @@ gulp.task('watch', async function () {
   );
 });
 
-gulp.task('clean', async function () {
-  return gulp
-    .src(
-      [
-        `${DIST}*.js`,
-        `${DIST}*.css`,
-        `${DIST}*.hbs`,
-        `${TMP}*.js`,
-        `${TMP}*.css`,
-        `${TMP}*.hbs`,
-      ],
-      { read: false },
-    )
-    .pipe(clean());
+gulp.task('clean', function () {
+  return del([`${DIST}`, `${TMP}`]);
 });
 
 gulp.task(
   'styles',
-  gulp.series('clean', async function () {
+  gulp.series('clean', function () {
     return gulp
       .src([BASE + '**.css'])
       .pipe(replace(NAME_TOKEN, DRIVER_NAME))
@@ -61,14 +49,14 @@ gulp.task(
 
 gulp.task(
   'assets',
-  gulp.series('styles', async function () {
+  gulp.series('styles', function () {
     return gulp.src(ASSETS + '*').pipe(gulp.dest(DIST));
   }),
 );
 
 gulp.task(
   'babel',
-  gulp.series('assets', async function () {
+  gulp.series('assets', function () {
     const babelOpts = {
       presets: [
         [
@@ -111,7 +99,7 @@ gulp.task(
 
 gulp.task(
   'rexport',
-  gulp.series('babel', async function () {
+  gulp.series('babel', function () {
     const babelOpts = {
       presets: [
         [
@@ -146,7 +134,7 @@ gulp.task(
 
 gulp.task(
   'compile',
-  gulp.series('rexport', async function () {
+  gulp.series('rexport', function () {
     return gulp
       .src([`${TMP}**.js`])
       .pipe(gulpConcat(`component.js`, { newLine: ';\n' }))
