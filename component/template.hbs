@@ -30,11 +30,13 @@
       </div>
       <div class="row">
         <div class="col span-12">
-          <label class="acc-label">API Location</label>
-          {{input type="text"
-                  class="form-control"
-                  value=config.apiLocation
-                  placeholder="CloudSigma API location endpoint code"
+          <label class="acc-label">API Location{{field-required}}</label>
+          {{new-select class="form-control"
+                       content=locationOptions
+                       optionLabelPath='name'
+                       optionValuePath='value'
+                       value=config.apiLocation
+
           }}
         </div>
       </div>

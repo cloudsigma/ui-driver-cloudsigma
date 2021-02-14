@@ -3,9 +3,9 @@ import NodeDriver from 'shared/mixins/node-driver';
 
 // do not remove LAYOUT, it is replaced at build time with a base64 representation of the template of the hbs template
 // we do this to avoid converting template to a js file that returns a string and the cors issues that would come along with that
+// noinspection JSAnnotator
 const LAYOUT;
 /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
-
 
 /*!!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
 // EMBER API Access - if you need access to any of the Ember API's add them here in the same manner rather then import them via modules, since the dependencies exist in rancher we dont want to expor the modules in the amd def
@@ -17,7 +17,6 @@ const service = Ember.inject.service;
 
 /*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
 
-
 /*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
   driverName: '%%DRIVERNAME%%',
@@ -28,12 +27,11 @@ export default Ember.Component.extend(NodeDriver, {
     // This does on the fly template compiling, if you mess with this :cry:
     const decodedLayout = window.atob(LAYOUT);
     const template = Ember.HTMLBars.compile(decodedLayout, {
-      moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template'
+      moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template',
     });
     set(this, 'layout', template);
 
     this._super(...arguments);
-
   },
   /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
@@ -81,7 +79,69 @@ export default Ember.Component.extend(NodeDriver, {
       set(this, 'errors', null);
       return true;
     }
-  }
+  },
 
   // Any computed properties or custom logic can go here
+  locationOptions: [
+    {
+      name: 'Boden, Sweden',
+      value: 'lla',
+    },
+    {
+      name: 'Clark, Philippines',
+      value: 'crk',
+    },
+    {
+      name: 'Dublin, Ireland',
+      value: 'dub',
+    },
+    {
+      name: 'Frankfurt, Germany',
+      value: 'fra',
+    },
+    {
+      name: 'Geneva, Switzerland',
+      value: 'gva',
+    },
+    {
+      name: 'Honolulu, United States',
+      value: 'hnl',
+    },
+    {
+      name: 'Melbourne, Australia',
+      value: 'mel',
+    },
+    {
+      name: 'Manila, Philippines',
+      value: 'mnl',
+    },
+    {
+      name: 'Manila-2, Philippines',
+      value: 'mnl2',
+    },
+    {
+      name: 'Perth, Australia',
+      value: 'per',
+    },
+    {
+      name: 'Riyadh, Saudi Arabia',
+      value: 'ruh',
+    },
+    {
+      name: 'San Jose, United States',
+      value: 'sjc',
+    },
+    {
+      name: 'Tokyo, Japan',
+      value: 'tyo',
+    },
+    {
+      name: 'Washington DC, United States',
+      value: 'wdc',
+    },
+    {
+      name: 'Zurich, Switzerland',
+      value: 'zrh',
+    },
+  ],
 });
