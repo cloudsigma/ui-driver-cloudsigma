@@ -150,7 +150,7 @@ gulp.task(
     return gulpConnect.server({
       root: [DIST],
       port: process.env.PORT || 3000,
-      https: false,
+      https: true,
     });
   }),
 );
